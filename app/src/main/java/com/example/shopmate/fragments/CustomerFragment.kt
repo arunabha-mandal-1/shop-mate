@@ -92,7 +92,7 @@ class CustomerFragment : Fragment() {
                         adapter.updateData(customerList)
                         customerViewModel.deleteCustomer(customer.phoneNumber.toString())
                     }
-                    .setNegativeButton("No"){_, _ ->
+                    .setNegativeButton("No") { _, _ ->
                         //...
                     }
                     .create()
@@ -248,10 +248,15 @@ class CustomerFragment : Fragment() {
                 email = email,
                 image = imageUrl
             )
-            customerList.add(customer)
-            adapter.updateData(customerList)
-            customerViewModel.addCustomer(customer)
-            dialog.dismiss()
+            if(customerList.contains(customer)){
+                Toast.makeText(requireContext(), "Already exists!", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }else {
+                customerList.add(customer)
+                adapter.updateData(customerList)
+                customerViewModel.addCustomer(customer)
+                dialog.dismiss()
+            }
         }
     }
 }
